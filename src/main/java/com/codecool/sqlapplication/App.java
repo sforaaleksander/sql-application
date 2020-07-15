@@ -1,13 +1,12 @@
 package com.codecool.sqlapplication;
 
-/**
- * Hello world!
- *
- */
+import java.sql.Connection;
+
+
 public class App
 {
     public static void main( String[] args )
     {
-        System.out.println( "Hello World!" );
+        PostgreSQLJDBC.connect();
     }
 }
