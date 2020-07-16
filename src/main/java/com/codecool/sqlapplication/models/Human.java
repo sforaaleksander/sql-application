@@ -12,4 +12,20 @@ public abstract class Human {
         this.phoneNumber = phoneNumber;
         this.email = email;
     }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public String getEmail() {
+        return email;
+    }
 }
