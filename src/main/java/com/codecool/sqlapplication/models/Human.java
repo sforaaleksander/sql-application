@@ -1,6 +1,8 @@
 package com.codecool.sqlapplication.models;
 
-public abstract class Human {
+import com.codecool.sqlapplication.DAO.DBObject;
+
+public abstract class Human implements DBObject {
     String firstName;
     String lastName;
     String phoneNumber;

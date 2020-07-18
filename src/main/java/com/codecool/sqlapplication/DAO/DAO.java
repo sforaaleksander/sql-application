@@ -1,4 +1,4 @@
-package com.codecool.sqlapplication;
+package com.codecool.sqlapplication.DAO;
 
 import java.util.List;
 

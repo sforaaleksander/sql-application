@@ -7,4 +7,12 @@ public class Applicant extends Human{
         super(firstName, lastName, phoneNumber, email);
         this.applicationCode = applicationCode;
     }
+
+    public int getApplicationCode() {
+        return applicationCode;
+    }
+
+    public Object[] toArray(){
+        return new Object[]{this.firstName, this.lastName, this.phoneNumber, this.email, this.applicationCode};
+    }
 }

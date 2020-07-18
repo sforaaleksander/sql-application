@@ -3,7 +3,7 @@ package com.codecool.sqlapplication.models;
 public class Mentor extends Human {
     String nickName;
     String city;
-    int favouriteNumber;
+    Integer favouriteNumber;
 
     public Mentor(String firstName, String lastName, String nickName, String phoneNumber, String email, String city, int favouriteNumber){
         super(firstName, lastName, phoneNumber, email);
@@ -22,5 +22,9 @@ public class Mentor extends Human {
 
     public int getFavouriteNumber() {
         return favouriteNumber;
+    }
+
+    public Object[] toArray(){
+        return new Object[]{this.firstName, this.lastName, this.nickName, this.phoneNumber, this.email, this.city, this.favouriteNumber};
     }
 }

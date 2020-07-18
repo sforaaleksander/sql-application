@@ -1,4 +1,4 @@
-package com.codecool.sqlapplication;
+package com.codecool.sqlapplication.DAO;
 
 import com.codecool.sqlapplication.models.Applicant;
 

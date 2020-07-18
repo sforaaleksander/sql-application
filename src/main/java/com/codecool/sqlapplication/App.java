@@ -21,9 +21,7 @@ public class App
         for (Method met : methods) {
             try {
                 System.out.println(met.invoke(mentor));
-            } catch (IllegalAccessException e) {
-                e.printStackTrace();
-            } catch (InvocationTargetException e) {
+            } catch (IllegalAccessException | InvocationTargetException e) {
                 e.printStackTrace();
             }
         }
