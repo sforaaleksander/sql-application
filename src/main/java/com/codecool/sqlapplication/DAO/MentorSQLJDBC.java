@@ -4,7 +4,7 @@ import com.codecool.sqlapplication.models.Mentor;
 
 import java.util.List;
 
-public class MentorSQLJDBC extends PostgreSQLJDBC<Mentor>{
+public class MentorSQLJDBC extends PostgreSQLJDBC<Mentor> implements DAO<Mentor>{
 
     MentorSQLJDBC(){
         this.table = "mentors";
@@ -13,7 +13,7 @@ public class MentorSQLJDBC extends PostgreSQLJDBC<Mentor>{
 
     @Override
     public void update(Mentor mentor) {
-
+        Integer id = (Integer) mentor.toObjectArray()[0];
     }
 
     @Override

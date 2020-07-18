@@ -2,7 +2,7 @@ package com.codecool.sqlapplication.DAO;
 
 import java.sql.*;
 
-public abstract class PostgreSQLJDBC implements DAO<DBObject>{
+public abstract class PostgreSQLJDBC<T>{
     protected static Connection connection;
     protected PreparedStatement statement;
     protected final String DB_NAME = "src/main/resources/postgres.db";
@@ -22,7 +22,7 @@ public abstract class PostgreSQLJDBC implements DAO<DBObject>{
 //        System.out.println("Opened database successfully");
 //    }
 
-    private ResultSet executeQuery(String query, DBObject object) {
+    private ResultSet executeQuery(String query, T object) {
         ResultSet resultSet = null;
         try {
             createStatement(query);
@@ -37,12 +37,16 @@ public abstract class PostgreSQLJDBC implements DAO<DBObject>{
         statement = connection.prepareStatement(query);
     }
 
-    protected void updateRecord(DBObject object) {
-        Integer id = object.toArray()[0];
-        String query = "UPDATE " + table + " SET ";
+    protected void updateRecord(Integer id, T object) {
+        StringBuilder query = new StringBuilder("UPDATE " + table + " SET ");
+        for (String column : columns) {
+            query.append(column).append(" = ?");
+        } query.append(" WHERE id = ").append(id).append(";");
+        executeQuery(query.toString(), object);
     }
+    
 
-    protected void insertRecord(DBObject object){
+    protected void insertRecord(T object){
         String columnsString = "(" + String.join(", ", columns) + ")";
         StringBuilder query = new StringBuilder("INSERT INTO" + table + columns + " VALUES ( ? )");
         for (int i=0; i<columns.length; i++) {

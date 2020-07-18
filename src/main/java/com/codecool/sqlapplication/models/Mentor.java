@@ -24,7 +24,7 @@ public class Mentor extends Human {
         return favouriteNumber;
     }
 
-    public Object[] toArray(){
+    public Object[] toObjectArray(){
         return new Object[]{this.firstName, this.lastName, this.nickName, this.phoneNumber, this.email, this.city, this.favouriteNumber};
     }
 }
