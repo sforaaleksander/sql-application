@@ -14,6 +14,7 @@ public class MentorSQLJDBC extends PostgreSQLJDBC<Mentor> implements DAO<Mentor>
     @Override
     public void update(Mentor mentor) {
         Integer id = (Integer) mentor.toObjectArray()[0];
+        updateRecord(id, mentor);
     }
 
     @Override
