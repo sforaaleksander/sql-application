@@ -4,7 +4,7 @@ import com.codecool.sqlapplication.models.Applicant;
 
 import java.util.List;
 
-public class ApplicantSQLJDBC extends PostgreSQLJDBC<Applicant> {
+public class ApplicantSQLJDBC extends PostgreSQLJDBC<Applicant> implements DAO<Applicant> {
 
     ApplicantSQLJDBC(){
         this.table = "applicants";

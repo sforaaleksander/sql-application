@@ -1,8 +1,6 @@
 package com.codecool.sqlapplication;
 
 
-import com.codecool.sqlapplication.models.Human;
-import com.codecool.sqlapplication.models.Input;
 import com.codecool.sqlapplication.models.Mentor;
 
 import java.lang.reflect.InvocationTargetException;
