@@ -1,8 +1,8 @@
-package com.codecool.sqlapplication.DAO;
+package com.codecool.sqlapplication.dao;
 
 import java.util.List;
 
-public interface DAO<T> {
+public interface IDAO<T> {
 
     void update(T object);
 
