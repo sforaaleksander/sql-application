@@ -54,7 +54,6 @@ public class MentorDao extends PostgresDao<Mentor> {
         return getAllElements();
     }
 
-
     @Override
     protected PreparedStatement constructPreparedStatementForUpdate(Mentor mentor, Connection connection) {
         long id = mentor.getId();
@@ -94,5 +93,20 @@ public class MentorDao extends PostgresDao<Mentor> {
         preparedStatement.setString(6, mentor.getCity());
         preparedStatement.setInt(7, mentor.getFavouriteNumber());
         return preparedStatement;
+    }
+
+    public void getBothNameColumns(){
+        Connection connection = this.getConnection();
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement("SELECT first_name, last_name FROM " + this.TABLENAME);
+            ResultSet rs = preparedStatement.executeQuery();
+            while (rs.next()) {
+                System.out.println(rs.getString("first_name") + "|" + rs.getString("last_name"));
+            }
+            preparedStatement.close();
+            connection.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 }
