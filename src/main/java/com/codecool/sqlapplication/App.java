@@ -14,7 +14,11 @@ public class App
 {
     public static void main( String[] args )
     {
-        new MentorDao().getBothNameColumns();
+        MentorDao mentorDao = new MentorDao();
+        ApplicantDao applicantDao = new ApplicantDao();
+//        mentorDao.getBothNameColumns();
+//        mentorDao.getNickNamesForMiskolc();
+        applicantDao.getCarol();
     }
 }
 

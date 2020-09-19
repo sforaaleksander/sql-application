@@ -94,4 +94,22 @@ public class ApplicantDao extends PostgresDao<Applicant> {
         return preparedStatement;
     }
 
+//    SELECT concat(first_name, ' ',  last_name, ' ' , phone_number) AS full_name from applicants WHERE first_name='Carol';
+
+    public void getCarol(){
+        Connection connection = this.getConnection();
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(
+                    "SELECT concat(first_name, ' ',  last_name, ' ' , phone_number) AS full_name from applicants WHERE first_name='Carol';");
+            ResultSet rs = preparedStatement.executeQuery();
+            while (rs.next()) {
+                System.out.println(
+                        rs.getString("full_name"));
+            }
+            preparedStatement.close();
+            connection.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 }

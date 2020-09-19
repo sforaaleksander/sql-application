@@ -2,10 +2,7 @@ package com.codecool.sqlapplication.dao;
 
 import com.codecool.sqlapplication.models.Mentor;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.List;
 import java.util.Optional;
 
@@ -102,6 +99,21 @@ public class MentorDao extends PostgresDao<Mentor> {
             ResultSet rs = preparedStatement.executeQuery();
             while (rs.next()) {
                 System.out.println(rs.getString("first_name") + "|" + rs.getString("last_name"));
+            }
+            preparedStatement.close();
+            connection.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void getNickNamesForMiskolc(){
+        Connection connection = this.getConnection();
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement("SELECT nick_name FROM mentors WHERE city='Miskolc'" );
+            ResultSet rs = preparedStatement.executeQuery();
+            while (rs.next()) {
+                System.out.println(rs.getString("nick_name"));
             }
             preparedStatement.close();
             connection.close();
