@@ -6,6 +6,13 @@ public abstract class User {
     protected String phoneNumber;
     protected String email;
 
+    public User(String firstName, String lastName, String phoneNumber, String email) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.phoneNumber = phoneNumber;
+        this.email = email;
+    }
+
     public String getFirstName() {
         return firstName;
     }

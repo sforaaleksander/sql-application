@@ -5,8 +5,8 @@ public class Mentor extends User{
     private String city;
     private Integer favouriteNumber;
 
-    public Mentor(String nickName, String city, int favouriteNumber){
-        super();
+    public Mentor(String firstName, String lastName, String phoneNumber, String email, String nickName, String city, int favouriteNumber){
+        super(firstName, lastName, phoneNumber, email);
         this.nickName = nickName;
         this.city = city;
         this.favouriteNumber = favouriteNumber;

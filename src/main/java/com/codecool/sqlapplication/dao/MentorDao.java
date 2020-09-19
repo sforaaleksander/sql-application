@@ -10,12 +10,19 @@ import java.util.List;
 public class MentorDao extends PostgresDao<Mentor> {
 
     public MentorDao(String tableName) {
-        super("");
+        super("mentors");
     }
 
     @Override
     Mentor create(ResultSet rs) throws SQLException {
-        return null;
+        String firstName = rs.getString("first_name");
+        String lastName = rs.getString("last_name");
+        String phoneNumber = rs.getString("phone_number");
+        String email = rs.getString("email");
+        String nickName = rs.getString("nick_name");
+        String city = rs.getString("city");
+        int favouriteNumber = rs.getInt("favourite_number");
+        return new Mentor(firstName, lastName, phoneNumber, email, nickName, city, favouriteNumber);
     }
 
     @Override
