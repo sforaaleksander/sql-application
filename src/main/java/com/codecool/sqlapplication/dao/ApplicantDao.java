@@ -53,7 +53,7 @@ public class ApplicantDao extends PostgresDao<Applicant> {
 
     @Override
     public List<Applicant> getAll() {
-        return null;
+        return getAllElements();
     }
 
     @Override
