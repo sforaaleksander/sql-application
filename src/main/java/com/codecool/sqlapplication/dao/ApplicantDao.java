@@ -1,8 +1,6 @@
 package com.codecool.sqlapplication.dao;
 
-import com.codecool.sqlapplication.App;
 import com.codecool.sqlapplication.models.Applicant;
-import com.codecool.sqlapplication.models.Mentor;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -77,8 +75,8 @@ public class ApplicantDao extends PostgresDao<Applicant> {
         PreparedStatement preparedStatement = null;
         try {
             preparedStatement = connection.prepareStatement("INSERT INTO applicants" +
-                    "(first_name, last_name, phone_number, email, city, application_code ) VALUES " +
-                    "(?, ?, ?, ?, ?, ?)");
+                    "(first_name, last_name, phone_number, email, application_code ) VALUES " +
+                    "(?, ?, ?, ?, ?)");
             preparedStatement = setValuesOnPreparedStatement(applicant, preparedStatement);
         } catch (SQLException e) {
             e.printStackTrace();
@@ -88,13 +86,11 @@ public class ApplicantDao extends PostgresDao<Applicant> {
     private PreparedStatement setValuesOnPreparedStatement(Applicant applicant, PreparedStatement preparedStatement) throws SQLException {
         preparedStatement.setString(1, applicant.getFirstName());
         preparedStatement.setString(2, applicant.getLastName());
-        preparedStatement.setString(4, applicant.getPhoneNumber());
-        preparedStatement.setString(5, applicant.getEmail());
-        preparedStatement.setInt(7, applicant.getApplicationCode());
+        preparedStatement.setString(3, applicant.getPhoneNumber());
+        preparedStatement.setString(4, applicant.getEmail());
+        preparedStatement.setInt(5, applicant.getApplicationCode());
         return preparedStatement;
     }
-
-//    SELECT concat(first_name, ' ',  last_name, ' ' , phone_number) AS full_name from applicants WHERE first_name='Carol';
 
     public void getCarol(){
         Connection connection = this.getConnection();
@@ -106,6 +102,66 @@ public class ApplicantDao extends PostgresDao<Applicant> {
                 System.out.println(
                         rs.getString("full_name"));
             }
+            preparedStatement.close();
+            connection.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void getCarol2(){
+        Connection connection = this.getConnection();
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(
+                    "SELECT concat(first_name, ' ',  last_name, ' ' , phone_number) AS full_name from applicants WHERE email LIKE '%adipiscingenimmi.edu';");
+            ResultSet rs = preparedStatement.executeQuery();
+            while (rs.next()) {
+                System.out.println(
+                        rs.getString("full_name"));
+            }
+            preparedStatement.close();
+            connection.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+    public void getByApplicationCode(long id){
+        Connection connection = this.getConnection();
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(
+                    "SELECT * from applicants WHERE id = ?;");
+            preparedStatement.setLong(1, id);
+            ResultSet rs = preparedStatement.executeQuery();
+            while (rs.next()) {
+                Applicant a = create(rs);
+                System.out.println(a.toString());
+            }
+            preparedStatement.close();
+            connection.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void updateJemina(){
+        Connection connection = this.getConnection();
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(
+                    "UPDATE applicants SET phone_number='003670/223-7459' WHERE first_name='Jemima' AND last_name='Foreman';");
+            preparedStatement.executeUpdate();
+            preparedStatement.close();
+            connection.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void deleteTwoGuys(){
+        Connection connection = this.getConnection();
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(
+                    "DELETE from applicants WHERE email LIKE '%@mauriseu.net';");
+            preparedStatement.executeUpdate();
             preparedStatement.close();
             connection.close();
         } catch (SQLException e) {

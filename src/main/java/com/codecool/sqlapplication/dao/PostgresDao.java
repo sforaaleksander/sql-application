@@ -15,7 +15,7 @@ public abstract class PostgresDao<T> implements IDAO<T> {
         TABLENAME = tableName;
     }
 
-    public Connection getConnection() {
+    protected Connection getConnection() {
         Connector connector = new Connector();
         return connector.Connect();
     }
@@ -23,7 +23,7 @@ public abstract class PostgresDao<T> implements IDAO<T> {
     abstract T create(ResultSet rs) throws SQLException;
 
 
-    public boolean insertElement(T object){
+    protected boolean insertElement(T object){
         Connection connection = this.getConnection();
         try {
             PreparedStatement preparedStatement = constructPreparedStatementForInsert(object, connection);
@@ -37,7 +37,7 @@ public abstract class PostgresDao<T> implements IDAO<T> {
         return false;
     }
     
-    public boolean updateElement(T object){
+    protected boolean updateElement(T object){
         Connection connection = this.getConnection();
         try {
             PreparedStatement preparedStatement = constructPreparedStatementForUpdate(object, connection);
@@ -51,7 +51,7 @@ public abstract class PostgresDao<T> implements IDAO<T> {
         return false;
     }
 
-    public boolean deleteElement(Long id){
+    protected boolean deleteElement(Long id){
         Connection connection = this.getConnection();
         try {
             PreparedStatement preparedStatement = connection.prepareStatement("DELETE FROM " + this.TABLENAME + " WHERE id = ?");
@@ -117,8 +117,8 @@ public abstract class PostgresDao<T> implements IDAO<T> {
         }
         return Optional.empty();
     }
-
-//    public T getHighestIdElement() {
+//
+//    public Optional<T> getHighestIdElement() {
 //        T element;
 //        Connection connection = this.getConnection();
 //        try {
@@ -130,12 +130,16 @@ public abstract class PostgresDao<T> implements IDAO<T> {
 //                rs.close();
 //                preparedStatement.close();
 //                connection.close();
-//                return element;
+//                return Optional.of(element);
 //            }
 //        } catch (SQLException e) {
-//            connection.close();
+//            try {
+//                connection.close();
+//            } catch (SQLException d) {
+//                d.printStackTrace();
+//            }
 //            e.printStackTrace();
 //        }
-//        throw new ElementNotFoundException(this.TABLENAME + " not found");
+//        return Optional.empty();
 //    }
 }

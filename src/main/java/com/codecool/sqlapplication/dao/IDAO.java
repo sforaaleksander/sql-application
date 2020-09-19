@@ -1,8 +1,5 @@
 package com.codecool.sqlapplication.dao;
 
-import com.codecool.sqlapplication.models.Mentor;
-
-import java.sql.SQLException;
 import java.util.List;
 import java.util.Optional;
 

@@ -72,8 +72,8 @@ public class MentorDao extends PostgresDao<Mentor> {
         PreparedStatement preparedStatement = null;
         try {
             preparedStatement = connection.prepareStatement("INSERT INTO mentors" +
-                    "(first_name, last_name, nick_name, phone_number, email, city, favourite_number ) VALUES " +
-                    "(?, ?, ?, ?, ?, ?, ?)");
+                    "(id, first_name, last_name, nick_name, phone_number, email, city, favourite_number ) VALUES " +
+                    "(?, ?, ?, ?, ?, ?, ?, ?)");
             preparedStatement = setValuesOnPreparedStatement(mentor, preparedStatement);
         } catch (SQLException e) {
             e.printStackTrace();
