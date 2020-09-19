@@ -18,6 +18,53 @@ public abstract class PostgresDao<T> implements IDAO<T> {
         Connector connector = new Connector();
         return connector.Connect();
     }
+    
+    public boolean insertElement(T object){
+        Connection connection = this.getConnection();
+        try {
+            PreparedStatement preparedStatement = constructPreparedStatementForInsert(object, connection);
+            preparedStatement.execute();
+            preparedStatement.close();
+            connection.close();
+            return true;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+    
+    public boolean updateElement(T object){
+        Connection connection = this.getConnection();
+        try {
+            PreparedStatement preparedStatement = constructPreparedStatementForUpdate(object, connection);
+            preparedStatement.execute();
+            preparedStatement.close();
+            connection.close();
+            return true;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    public boolean deleteElement(Long id){
+        Connection connection = this.getConnection();
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement("DELETE FROM " + this.TABLENAME + " WHERE id = ?");
+            preparedStatement.setLong(1, id);
+            preparedStatement.executeUpdate();
+            preparedStatement.close();
+            connection.close();
+            return true;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    protected abstract PreparedStatement constructPreparedStatementForUpdate(T object, Connection connection);
+
+    protected abstract PreparedStatement constructPreparedStatementForInsert(T object, Connection connection);
 
     public List<T> getAllElements() throws ElementNotFoundException, SQLException {
         List<T> elements = new ArrayList<>();
@@ -79,21 +126,6 @@ public abstract class PostgresDao<T> implements IDAO<T> {
             e.printStackTrace();
         }
         throw new ElementNotFoundException(this.TABLENAME + " not found");
-    }
-
-    public boolean deleteElement(Long id) {
-        Connection connection = this.getConnection();
-        try {
-            PreparedStatement preparedStatement = connection.prepareStatement("DELETE FROM " + this.TABLENAME + " WHERE id = ?");
-            preparedStatement.setLong(1, id);
-            preparedStatement.executeUpdate();
-            preparedStatement.close();
-            connection.close();
-            return true;
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return false;
     }
 
     abstract T create(ResultSet rs) throws SQLException;

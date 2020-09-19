@@ -1,6 +1,7 @@
 package com.codecool.sqlapplication.models;
 
 public abstract class User {
+    protected long id;
     protected String firstName;
     protected String lastName;
     protected String phoneNumber;
@@ -11,6 +12,10 @@ public abstract class User {
         this.lastName = lastName;
         this.phoneNumber = phoneNumber;
         this.email = email;
+    }
+
+    public long getId() {
+        return id;
     }
 
     public String getFirstName() {

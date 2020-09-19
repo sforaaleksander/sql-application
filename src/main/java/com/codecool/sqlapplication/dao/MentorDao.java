@@ -11,7 +11,7 @@ import java.util.List;
 
 public class MentorDao extends PostgresDao<Mentor> {
 
-    public MentorDao(String tableName) {
+    public MentorDao() {
         super("mentors");
     }
 
@@ -27,42 +27,71 @@ public class MentorDao extends PostgresDao<Mentor> {
         return new Mentor(firstName, lastName, phoneNumber, email, nickName, city, favouriteNumber);
     }
 
+
+    @Override
+    public Mentor getById(Long id) throws SQLException, ClassNotFoundException {
+        return getElementById(id);
+    }
+
+    @Override
+    public boolean insert(Mentor mentor) {
+        return insertElement(mentor);
+    }
+
     @Override
     public boolean update(Mentor mentor) {
-        Connection connection = this.getConnection();
+        return updateElement(mentor);
+    }
+
+    @Override
+    public boolean delete(Long id) throws ClassNotFoundException {
+        return deleteElement(id);
+    }
+
+    @Override
+    public List<Mentor> getAll() throws SQLException, ClassNotFoundException {
+        return getAllElements();
+    }
+
+
+    @Override
+    protected PreparedStatement constructPreparedStatementForUpdate(Mentor mentor, Connection connection) {
+        long id = mentor.getId();
+        PreparedStatement preparedStatement = null;
         try {
-            PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO mentors" +
-                    "(first_name, last_name, nick_name, phone_number, email, city, favourite_number ) VALUES " +
-                    "(?, ?, ?, ?, ?, ?, ?)");
-            preparedStatement.setString(1, mentor.getFirstName());
-            preparedStatement.setString(2, mentor.getLastName());
-            preparedStatement.setString(3, mentor.getNickName());
-            preparedStatement.setString(4, mentor.getPhoneNumber());
-            preparedStatement.setString(5, mentor.getEmail());
-            preparedStatement.setString(6, mentor.getCity());
-            preparedStatement.setInt(7, mentor.getFavouriteNumber());
-            preparedStatement.executeUpdate();
-            preparedStatement.close();
-            connection.close();
-            return true;
+            preparedStatement = connection.prepareStatement("UPDATE mentors SET" +
+                    "first_name=?, last_name=?, nick_name=?, phone_number=?, email=?, city=?, favourite_number=? " +
+                    " WHERE id = ?");
+            preparedStatement = setValuesOnPreparedStatement(mentor, preparedStatement);
+            preparedStatement.setLong(8, mentor.getId());
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return false;
+        return preparedStatement;
     }
 
     @Override
-    public boolean remove(Mentor object) {
-
+    protected PreparedStatement constructPreparedStatementForInsert(Mentor mentor, Connection connection) {
+        PreparedStatement preparedStatement = null;
+        try {
+            preparedStatement = connection.prepareStatement("INSERT INTO mentors" +
+                    "(first_name, last_name, nick_name, phone_number, email, city, favourite_number ) VALUES " +
+                    "(?, ?, ?, ?, ?, ?, ?)");
+            preparedStatement = setValuesOnPreparedStatement(mentor, preparedStatement);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return preparedStatement;
     }
 
-    @Override
-    public boolean insert(Mentor object) {
-
-    }
-
-    @Override
-    public List<Mentor> getObjects(String columnName, String columnValue) {
-        return null;
+    private PreparedStatement setValuesOnPreparedStatement(Mentor mentor, PreparedStatement preparedStatement) throws SQLException {
+        preparedStatement.setString(1, mentor.getFirstName());
+        preparedStatement.setString(2, mentor.getLastName());
+        preparedStatement.setString(3, mentor.getNickName());
+        preparedStatement.setString(4, mentor.getPhoneNumber());
+        preparedStatement.setString(5, mentor.getEmail());
+        preparedStatement.setString(6, mentor.getCity());
+        preparedStatement.setInt(7, mentor.getFavouriteNumber());
+        return preparedStatement;
     }
 }

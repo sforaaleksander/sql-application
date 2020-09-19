@@ -1,15 +1,18 @@
 package com.codecool.sqlapplication.dao;
 
+import java.sql.SQLException;
 import java.util.List;
 
 public interface IDAO<T> {
 
-    boolean update(T object);
+    T getById(Long id) throws SQLException, ClassNotFoundException;
 
-    boolean remove(T object);
+    boolean insert(T t) throws ClassNotFoundException, SQLException;
 
-    boolean insert(T object);
+    boolean update(T t) throws ClassNotFoundException, SQLException;
 
-    List<T> getObjects(String columnName, String columnValue);
+    boolean delete(Long id) throws ClassNotFoundException;
+
+    List<T> getAll() throws SQLException, ClassNotFoundException;
 }
 
