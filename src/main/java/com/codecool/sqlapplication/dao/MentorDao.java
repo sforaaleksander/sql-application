@@ -2,6 +2,8 @@ package com.codecool.sqlapplication.dao;
 
 import com.codecool.sqlapplication.models.Mentor;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
@@ -26,17 +28,36 @@ public class MentorDao extends PostgresDao<Mentor> {
     }
 
     @Override
-    public void update(Mentor object) {
+    public boolean update(Mentor mentor) {
+        Connection connection = this.getConnection();
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO mentors" +
+                    "(first_name, last_name, nick_name, phone_number, email, city, favourite_number ) VALUES " +
+                    "(?, ?, ?, ?, ?, ?, ?)");
+            preparedStatement.setString(1, mentor.getFirstName());
+            preparedStatement.setString(2, mentor.getLastName());
+            preparedStatement.setString(3, mentor.getNickName());
+            preparedStatement.setString(4, mentor.getPhoneNumber());
+            preparedStatement.setString(5, mentor.getEmail());
+            preparedStatement.setString(6, mentor.getCity());
+            preparedStatement.setInt(7, mentor.getFavouriteNumber());
+            preparedStatement.executeUpdate();
+            preparedStatement.close();
+            connection.close();
+            return true;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    @Override
+    public boolean remove(Mentor object) {
 
     }
 
     @Override
-    public void remove(Mentor object) {
-
-    }
-
-    @Override
-    public void insert(Mentor object) {
+    public boolean insert(Mentor object) {
 
     }
 

@@ -26,17 +26,17 @@ public class ApplicantDao extends PostgresDao<Applicant> {
     }
 
     @Override
-    public void update(Applicant object) {
+    public boolean update(Applicant object) {
 
     }
 
     @Override
-    public void remove(Applicant object) {
+    public boolean remove(Applicant object) {
 
     }
 
     @Override
-    public void insert(Applicant object) {
+    public boolean insert(Applicant object) {
 
     }
 

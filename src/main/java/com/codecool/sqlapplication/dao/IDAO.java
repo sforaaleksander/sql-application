@@ -4,11 +4,11 @@ import java.util.List;
 
 public interface IDAO<T> {
 
-    void update(T object);
+    boolean update(T object);
 
-    void remove(T object);
+    boolean remove(T object);
 
-    void insert(T object);
+    boolean insert(T object);
 
     List<T> getObjects(String columnName, String columnValue);
 }
