@@ -9,6 +9,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
+import java.util.Optional;
 
 
 public class ApplicantDao extends PostgresDao<Applicant> {
@@ -29,7 +30,7 @@ public class ApplicantDao extends PostgresDao<Applicant> {
 
 
     @Override
-    public Applicant getById(Long id) throws SQLException {
+    public Optional<Applicant> getById(Long id) {
         return getElementById(id);
     }
 
@@ -46,12 +47,12 @@ public class ApplicantDao extends PostgresDao<Applicant> {
     }
 
     @Override
-    public boolean delete(Long id) throws ClassNotFoundException {
+    public boolean delete(Long id) {
         return false;
     }
 
     @Override
-    public List<Applicant> getAll() throws SQLException, ClassNotFoundException {
+    public List<Applicant> getAll() {
         return null;
     }
 

@@ -7,6 +7,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
+import java.util.Optional;
 
 
 public class MentorDao extends PostgresDao<Mentor> {
@@ -29,7 +30,7 @@ public class MentorDao extends PostgresDao<Mentor> {
 
 
     @Override
-    public Mentor getById(Long id) throws SQLException, ClassNotFoundException {
+    public Optional<Mentor> getById(Long id) {
         return getElementById(id);
     }
 
@@ -44,12 +45,12 @@ public class MentorDao extends PostgresDao<Mentor> {
     }
 
     @Override
-    public boolean delete(Long id) throws ClassNotFoundException {
+    public boolean delete(Long id) {
         return deleteElement(id);
     }
 
     @Override
-    public List<Mentor> getAll() throws SQLException, ClassNotFoundException {
+    public List<Mentor> getAll() {
         return getAllElements();
     }
 

@@ -5,6 +5,7 @@ import com.codecool.sqlapplication.exception.ElementNotFoundException;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 public abstract class PostgresDao<T> implements IDAO<T> {
     public final String TABLENAME;
@@ -18,7 +19,10 @@ public abstract class PostgresDao<T> implements IDAO<T> {
         Connector connector = new Connector();
         return connector.Connect();
     }
-    
+
+    abstract T create(ResultSet rs) throws SQLException;
+
+
     public boolean insertElement(T object){
         Connection connection = this.getConnection();
         try {
@@ -66,7 +70,7 @@ public abstract class PostgresDao<T> implements IDAO<T> {
 
     protected abstract PreparedStatement constructPreparedStatementForInsert(T object, Connection connection);
 
-    public List<T> getAllElements() throws ElementNotFoundException, SQLException {
+    public List<T> getAllElements() {
         List<T> elements = new ArrayList<>();
         Connection connection = this.getConnection();
         try {
@@ -78,15 +82,18 @@ public abstract class PostgresDao<T> implements IDAO<T> {
             rs.close();
             statement.close();
             connection.close();
-            return elements;
         } catch (SQLException e) {
-            connection.close();
+            try {
+                connection.close();
+            } catch (SQLException d) {
+                d.printStackTrace();
+            }
             e.printStackTrace();
         }
-        throw new ElementNotFoundException(TABLENAME + " could not be found");
+        return elements;
     }
 
-    public T getElementById(Long id) throws ElementNotFoundException, SQLException {
+    public Optional<T> getElementById(Long id) {
         T element;
         Connection connection = this.getConnection();
         try {
@@ -98,35 +105,37 @@ public abstract class PostgresDao<T> implements IDAO<T> {
                 rs.close();
                 preparedStatement.close();
                 connection.close();
-                return element;
+                return Optional.of(element);
             }
         } catch (SQLException e) {
-            connection.close();
-            e.printStackTrace();
-        }
-        throw new ElementNotFoundException(this.TABLENAME + " not found");
-    }
-
-    public T getHighestIdElement() throws ElementNotFoundException, SQLException {
-        T element;
-        Connection connection = this.getConnection();
-        try {
-            PreparedStatement preparedStatement = connection.prepareStatement("SELECT * " +
-                    "FROM " + this.TABLENAME+ " order by id desc limit 1");
-            ResultSet rs = preparedStatement.executeQuery();
-            if (rs.next()) {
-                element = create(rs);
-                rs.close();
-                preparedStatement.close();
+            try {
                 connection.close();
-                return element;
+            } catch (SQLException d) {
+                d.printStackTrace();
             }
-        } catch (SQLException e) {
-            connection.close();
             e.printStackTrace();
         }
-        throw new ElementNotFoundException(this.TABLENAME + " not found");
+        return Optional.empty();
     }
 
-    abstract T create(ResultSet rs) throws SQLException;
+//    public T getHighestIdElement() {
+//        T element;
+//        Connection connection = this.getConnection();
+//        try {
+//            PreparedStatement preparedStatement = connection.prepareStatement("SELECT * " +
+//                    "FROM " + this.TABLENAME+ " order by id desc limit 1");
+//            ResultSet rs = preparedStatement.executeQuery();
+//            if (rs.next()) {
+//                element = create(rs);
+//                rs.close();
+//                preparedStatement.close();
+//                connection.close();
+//                return element;
+//            }
+//        } catch (SQLException e) {
+//            connection.close();
+//            e.printStackTrace();
+//        }
+//        throw new ElementNotFoundException(this.TABLENAME + " not found");
+//    }
 }

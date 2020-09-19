@@ -13,10 +13,10 @@ public class App
     public static void main( String[] args )
     {
         MentorDao mentorDao = new MentorDao();
-        Mentor mentor = new Mentor("tesetee", "tttt", "+123", "b@", "boo", "lodz", 4);
+        Mentor mentor = new Mentor("222", "222", "+123", "b@", "boo", "lodz", 4);
         mentorDao.insert(mentor);
-        ApplicantDao applicantDao = new ApplicantDao();
-        applicantDao.getAll();
+//        ApplicantDao applicantDao = new ApplicantDao();
+//        applicantDao.getAll();
     }
 }
 
