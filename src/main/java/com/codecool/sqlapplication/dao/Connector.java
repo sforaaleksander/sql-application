@@ -7,8 +7,8 @@ public class Connector {
     java.sql.Connection connection;
 
     private final String user = "sqldictator";
-    private final String password = "9e5b86b4994947d6c5da7f4ff39f2221c60e9bc44a8ec2785bd472a0e6604b9b";
-    private static final String CONNECTION_STRING = "jdbc:postgresql://ec2-54-246-85-151.eu-west-1.compute.amazonaws.com:5432/d38udvntvo8fhl";
+    private final String password = "123";
+    private static final String CONNECTION_STRING = "jdbc:postgresql://localhost:5432/assignmentdb";
     static int counter = 0;
 
 
@@ -17,7 +17,7 @@ public class Connector {
         try {
             Class.forName("org.postgresql.Driver");
             connection = DriverManager.getConnection(CONNECTION_STRING, user, password);
-            System.out.println(++counter);
+            System.out.println("opened connection: " + ++counter);
         } catch (SQLException | ClassNotFoundException e) {
             e.printStackTrace();
         }

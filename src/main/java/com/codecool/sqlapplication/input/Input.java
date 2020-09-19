@@ -1,4 +1,4 @@
-package com.codecool.sqlapplication.models;
+package com.codecool.sqlapplication.input;
 
 import java.util.Scanner;
 
